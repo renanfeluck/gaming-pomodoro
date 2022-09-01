@@ -1,6 +1,7 @@
+import { Button } from "@rneui/base";
 import { Audio } from "expo-av";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 type CountdownType = {
   startMinutes: number;
@@ -45,7 +46,6 @@ const Countdown = ({ startMinutes, startSeconds }: CountdownType) => {
     if (minutes > 0 || seconds > 0) {
       setTimer(
         setInterval(() => {
-          console.log("seconds", seconds);
           if (!pause) {
             if (seconds > 0) {
               setSeconds(seconds - 1);
@@ -66,22 +66,40 @@ const Countdown = ({ startMinutes, startSeconds }: CountdownType) => {
     <>
       <View style={styles.counterView}>
         <Text style={styles.counterText}>
-          {minutes.toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}{" "}
-          :{" "}
-          {seconds.toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}
+          {minutes.toString().padStart(2, "0")} :{" "}
+          {seconds.toString().padStart(2, "0")}
         </Text>
       </View>
 
       {pause ? (
-        <Button onPress={() => setPause(!pause)} title="Start" />
+        <View style={styles.buttonView}>
+          <Button
+            buttonStyle={{
+              borderRadius: 5,
+              padding: 12,
+              height: 50,
+              width: 100,
+              marginTop: 10,
+            }}
+            onPress={() => setPause(!pause)}
+            title="Start"
+          />
+        </View>
       ) : (
-        <Button onPress={reset} title="Reset" />
+        <View style={styles.buttonView}>
+          <Button
+            buttonStyle={{
+              borderRadius: 5,
+              padding: 12,
+              height: 50,
+              width: 100,
+              marginTop: 10,
+            }}
+            onPress={reset}
+            title="Reset"
+            color="error"
+          />
+        </View>
       )}
     </>
   );
@@ -101,6 +119,12 @@ const styles = StyleSheet.create({
   },
   counterText: {
     fontSize: 36,
+  },
+  buttonView: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
   },
 });
 
