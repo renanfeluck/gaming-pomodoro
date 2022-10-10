@@ -109,13 +109,14 @@ const styles = StyleSheet.create({
   counterView: {
     backgroundColor: "#fff",
     borderRadius: 50,
-    padding: 24,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
     alignContent: "center",
     marginBottom: 12,
+    width: 150,
+    height: 150,
   },
   counterText: {
     fontSize: 36,

@@ -94,6 +94,7 @@ export default function App() {
                   activeOpacity={0.6}
                   underlayColor="#DDDDDD"
                   onPress={() => setActive("focus")}
+                  style={{ flex: 1 }}
                 >
                   <Text
                     style={
@@ -110,6 +111,7 @@ export default function App() {
                   activeOpacity={0.6}
                   underlayColor="#DDDDDD"
                   onPress={() => setActive("short")}
+                  style={{ flex: 1 }}
                 >
                   <Text
                     style={
@@ -126,6 +128,7 @@ export default function App() {
                   activeOpacity={0.6}
                   underlayColor="#DDDDDD"
                   onPress={() => setActive("long")}
+                  style={{ flex: 1 }}
                 >
                   <Text
                     style={
@@ -221,9 +224,11 @@ const styles = StyleSheet.create({
   },
   buttonSelected: {
     fontWeight: "bold",
+    textAlign: "center",
   },
   buttonNotSelected: {
     fontStyle: "italic",
+    textAlign: "center",
   },
   countdownView: {
     height: 140,
@@ -236,7 +241,7 @@ const styles = StyleSheet.create({
   topBox: {
     width: "100%",
     alignItems: "center",
-    marginTop: 100,
+    marginTop: 75,
     flex: 1,
   },
   textBox: {
@@ -256,6 +261,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(255, 255, 255, 0.7)",
     marginTop: 36,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputView: {
     flex: 1,

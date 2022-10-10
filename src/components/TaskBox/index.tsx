@@ -23,7 +23,7 @@ const TaskBox = ({ task, onCheckTask, onDeleteTask }: TaskBoxType) => {
   };
 
   return (
-    <View style={styles.taskBox}>
+    <View style={styles.taskBox} key={task.id}>
       <CheckBox
         center
         title={task.name}
@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 12,
+    borderRadius: 10,
+    width: "95%",
   },
   dialog: {
     backgroundColor: "#fff",
