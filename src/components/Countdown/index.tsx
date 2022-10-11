@@ -6,8 +6,9 @@ import { StyleSheet, Text, View } from "react-native";
 type CountdownType = {
   startMinutes: number;
   startSeconds: number;
+  onFinish?: () => void;
 };
-const Countdown = ({ startMinutes, startSeconds }: CountdownType) => {
+const Countdown = ({ startMinutes, startSeconds, onFinish }: CountdownType) => {
   const [seconds, setSeconds] = useState(startSeconds);
   const [minutes, setMinutes] = useState(startMinutes);
   const [timer, setTimer] = useState<NodeJS.Timer>();
@@ -57,10 +58,16 @@ const Countdown = ({ startMinutes, startSeconds }: CountdownType) => {
         }, 1000)
       );
     } else {
+      onFinish && onFinish();
       playSound();
     }
     clearInterval(timer);
   }, [seconds, pause]);
+
+  useEffect(() => {
+    setMinutes(startMinutes);
+    setSeconds(startSeconds);
+  }, [startMinutes, startSeconds]);
 
   return (
     <>
