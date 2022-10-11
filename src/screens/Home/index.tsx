@@ -235,6 +235,7 @@ const Home = ({ navigation }: Props) => {
                 task={task}
                 onCheckTask={onCheckTask}
                 onDeleteTask={onDeleteTask}
+                key={task.id}
               />
             ))}
           </View>

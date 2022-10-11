@@ -1,7 +1,7 @@
 import { Button } from "@rneui/base";
 import { Audio } from "expo-av";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, Vibration, View } from "react-native";
 
 type CountdownType = {
   startMinutes: number;
@@ -23,6 +23,10 @@ const Countdown = ({ startMinutes, startSeconds, onFinish }: CountdownType) => {
     );
 
     setSound(sound);
+
+    const ONE_SECOND_IN_MS = 1000;
+
+    Vibration.vibrate(10 * ONE_SECOND_IN_MS);
 
     await sound.playAsync();
   };
