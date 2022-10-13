@@ -6,6 +6,7 @@ import Home from "./src/screens/Home";
 import Settings from "./src/screens/Settings";
 
 import { Ionicons } from "@expo/vector-icons";
+import Customize from "./src/screens/Customize";
 
 export default function App() {
   const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -13,6 +14,15 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Home">
+        <Tab.Screen
+          name="Customize"
+          component={Customize}
+          options={{
+            tabBarIcon: () => (
+              <Ionicons name="brush-outline" size={24} color="black" />
+            ),
+          }}
+        />
         <Tab.Screen
           name="Home"
           component={Home}

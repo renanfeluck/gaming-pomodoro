@@ -27,6 +27,8 @@ const Home = ({ navigation }: Props) => {
   const [settings, setSettings] = useState<SettingsType | null>(null);
   const [intervalCount, setIntervalCount] = useState(3);
 
+  const [bg, setBg] = useState<any>();
+
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem("settings");
@@ -40,9 +42,18 @@ const Home = ({ navigation }: Props) => {
     }
   };
 
+  const getCustomize = () => {
+    AsyncStorage.getItem("customize").then((res) => {
+      const jsonRes = JSON.parse(res || '{bg: ""}');
+      setBg(jsonRes.bg);
+    });
+  };
+
   useEffect(() => {
     const unsubscribe: () => void = navigation.addListener("focus", () => {
       getData();
+
+      getCustomize();
 
       return unsubscribe;
     });
@@ -111,138 +122,137 @@ const Home = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        style={styles.imgBg}
-        source={require("../../../assets/parallax-forest-preview.png")}
-      >
-        <ScrollView style={{ width: "100%", flex: 1 }}>
-          <View style={styles.topBox}>
-            <View style={styles.textBox}>
-              <Text
-                style={{ textAlign: "center", textAlignVertical: "center" }}
-              >
-                Time to focus...
-              </Text>
-            </View>
-            <Image
-              style={styles.char}
-              source={require("../../../assets/hood.gif")}
-            />
-          </View>
-
-          <View style={styles.pomoBox}>
-            <View style={styles.pomoBg}>
-              <View style={styles.stageSelect}>
-                <TouchableHighlight
-                  activeOpacity={0.6}
-                  underlayColor="#DDDDDD"
-                  onPress={() => setActive("focus")}
-                  style={{ flex: 1 }}
+      {bg && (
+        <ImageBackground style={styles.imgBg} source={bg}>
+          <ScrollView style={{ width: "100%", flex: 1 }}>
+            <View style={styles.topBox}>
+              <View style={styles.textBox}>
+                <Text
+                  style={{ textAlign: "center", textAlignVertical: "center" }}
                 >
-                  <Text
-                    style={
-                      active === "focus"
-                        ? styles.buttonSelected
-                        : styles.buttonNotSelected
-                    }
-                  >
-                    Focus
-                  </Text>
-                </TouchableHighlight>
-
-                <TouchableHighlight
-                  activeOpacity={0.6}
-                  underlayColor="#DDDDDD"
-                  onPress={() => setActive("short")}
-                  style={{ flex: 1 }}
-                >
-                  <Text
-                    style={
-                      active === "short"
-                        ? styles.buttonSelected
-                        : styles.buttonNotSelected
-                    }
-                  >
-                    Short Interval
-                  </Text>
-                </TouchableHighlight>
-
-                <TouchableHighlight
-                  activeOpacity={0.6}
-                  underlayColor="#DDDDDD"
-                  onPress={() => setActive("long")}
-                  style={{ flex: 1 }}
-                >
-                  <Text
-                    style={
-                      active === "long"
-                        ? styles.buttonSelected
-                        : styles.buttonNotSelected
-                    }
-                  >
-                    Long Interval
-                  </Text>
-                </TouchableHighlight>
+                  Time to focus...
+                </Text>
               </View>
-              <View style={styles.countdownView}>
-                {active === "focus" && (
-                  <Countdown
-                    startMinutes={settings?.pomodoro || 25}
-                    startSeconds={0}
-                    onFinish={onFinishFocus}
-                  />
-                )}
-
-                {active === "short" && (
-                  <Countdown
-                    startMinutes={settings?.shortRest || 5}
-                    startSeconds={0}
-                    onFinish={onFinishRest}
-                  />
-                )}
-
-                {active === "long" && (
-                  <Countdown
-                    startMinutes={settings?.longRest || 15}
-                    startSeconds={0}
-                    onFinish={onFinishRest}
-                  />
-                )}
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.tasksBox}>
-            <Text style={styles.tasksTitle}> Tasks </Text>
-
-            <View style={styles.inputView}>
-              <View style={{ width: "80%" }}>
-                <Input
-                  placeholder="Add Task"
-                  value={inputAdd}
-                  onChangeText={(text) => setInputAdd(text)}
-                  onSubmitEditing={onAddTask}
-                  inputStyle={{ width: 80 }}
-                />
-              </View>
-              <Button onPress={onAddTask} type="clear">
-                <Icon name="plus" type="entypo" />
-              </Button>
-            </View>
-
-            {tasks.map((task) => (
-              <TaskBox
-                task={task}
-                onCheckTask={onCheckTask}
-                onDeleteTask={onDeleteTask}
-                key={task.id}
+              <Image
+                style={styles.char}
+                source={require("../../../assets/hood.gif")}
               />
-            ))}
-          </View>
-        </ScrollView>
+            </View>
 
-        <StatusBar style="auto" />
-      </ImageBackground>
+            <View style={styles.pomoBox}>
+              <View style={styles.pomoBg}>
+                <View style={styles.stageSelect}>
+                  <TouchableHighlight
+                    activeOpacity={0.6}
+                    underlayColor="#DDDDDD"
+                    onPress={() => setActive("focus")}
+                    style={{ flex: 1 }}
+                  >
+                    <Text
+                      style={
+                        active === "focus"
+                          ? styles.buttonSelected
+                          : styles.buttonNotSelected
+                      }
+                    >
+                      Focus
+                    </Text>
+                  </TouchableHighlight>
+
+                  <TouchableHighlight
+                    activeOpacity={0.6}
+                    underlayColor="#DDDDDD"
+                    onPress={() => setActive("short")}
+                    style={{ flex: 1 }}
+                  >
+                    <Text
+                      style={
+                        active === "short"
+                          ? styles.buttonSelected
+                          : styles.buttonNotSelected
+                      }
+                    >
+                      Short Interval
+                    </Text>
+                  </TouchableHighlight>
+
+                  <TouchableHighlight
+                    activeOpacity={0.6}
+                    underlayColor="#DDDDDD"
+                    onPress={() => setActive("long")}
+                    style={{ flex: 1 }}
+                  >
+                    <Text
+                      style={
+                        active === "long"
+                          ? styles.buttonSelected
+                          : styles.buttonNotSelected
+                      }
+                    >
+                      Long Interval
+                    </Text>
+                  </TouchableHighlight>
+                </View>
+                <View style={styles.countdownView}>
+                  {active === "focus" && (
+                    <Countdown
+                      startMinutes={settings?.pomodoro || 25}
+                      startSeconds={0}
+                      onFinish={onFinishFocus}
+                    />
+                  )}
+
+                  {active === "short" && (
+                    <Countdown
+                      startMinutes={settings?.shortRest || 5}
+                      startSeconds={0}
+                      onFinish={onFinishRest}
+                    />
+                  )}
+
+                  {active === "long" && (
+                    <Countdown
+                      startMinutes={settings?.longRest || 15}
+                      startSeconds={0}
+                      onFinish={onFinishRest}
+                    />
+                  )}
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.tasksBox}>
+              <Text style={styles.tasksTitle}> Tasks </Text>
+
+              <View style={styles.inputView}>
+                <View style={{ width: "80%" }}>
+                  <Input
+                    placeholder="Add Task"
+                    value={inputAdd}
+                    onChangeText={(text) => setInputAdd(text)}
+                    onSubmitEditing={onAddTask}
+                    inputStyle={{ width: 80 }}
+                  />
+                </View>
+                <Button onPress={onAddTask} type="clear">
+                  <Icon name="plus" type="entypo" />
+                </Button>
+              </View>
+
+              {tasks.map((task) => (
+                <TaskBox
+                  task={task}
+                  onCheckTask={onCheckTask}
+                  onDeleteTask={onDeleteTask}
+                  key={task.id}
+                />
+              ))}
+            </View>
+          </ScrollView>
+
+          <StatusBar style="auto" />
+        </ImageBackground>
+      )}
     </View>
   );
 };
