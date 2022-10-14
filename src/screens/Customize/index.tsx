@@ -1,8 +1,17 @@
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Tab, Text, TabView } from "@rneui/themed";
 import { useState } from "react";
 import BackgroundTab from "../../components/BackgroundTab";
 
-const Customize = () => {
+type CustomizeType = {
+  navigation: NativeStackNavigationProp<
+    RootStackParamList,
+    "Customize",
+    "MyStack"
+  >;
+};
+
+const Customize = ({ navigation }: CustomizeType) => {
   const [index, setIndex] = useState(0);
   return (
     <>
@@ -35,7 +44,7 @@ const Customize = () => {
       <TabView value={index || 0} onChange={setIndex} animationType="spring">
         <TabView.Item style={{ width: "100%" }}>
           {/* <Text h1>Background</Text> */}
-          <BackgroundTab />
+          <BackgroundTab navigation={navigation} />
         </TabView.Item>
         <TabView.Item style={{ backgroundColor: "blue", width: "100%" }}>
           <Text h1>Character</Text>
