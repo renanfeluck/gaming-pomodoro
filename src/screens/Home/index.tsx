@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import "expo-dev-menu";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -29,7 +36,7 @@ const Home = ({ navigation }: Props) => {
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <ImageBackgroundCustom navigation={navigation}>
         <ScrollView style={{ width: "100%", flex: 1 }}>
           <View style={styles.topBox}>
@@ -46,7 +53,7 @@ const Home = ({ navigation }: Props) => {
 
         <StatusBar style="auto" />
       </ImageBackgroundCustom>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
