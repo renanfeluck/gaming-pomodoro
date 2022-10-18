@@ -2,10 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import "expo-dev-menu";
-import TaskBox from "../../components/TaskBox";
-import { Tasks } from "../../types/task";
-import { generateRnadomId } from "../../utils/generateRandomId";
-import { Button, Icon, Input } from "@rneui/base";
+
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ImageBackgroundCustom from "../../components/ImageBackgroundCustom";
 import PomoBox from "../../components/PomoBox";
@@ -36,13 +33,6 @@ const Home = ({ navigation }: Props) => {
       <ImageBackgroundCustom navigation={navigation}>
         <ScrollView style={{ width: "100%", flex: 1 }}>
           <View style={styles.topBox}>
-            <View style={styles.textBox}>
-              <Text
-                style={{ textAlign: "center", textAlignVertical: "center" }}
-              >
-                Time to focus...
-              </Text>
-            </View>
             <Image
               style={styles.char}
               source={charImg || require("../../../assets/char/char1.gif")}

@@ -29,7 +29,10 @@ const ImageBackgroundCustom = ({
   }, [navigation]);
 
   return (
-    <ImageBackground style={styles.imgBg} source={bg}>
+    <ImageBackground
+      style={styles.imgBg || require("../../../assets/bg/Battleground2.png")}
+      source={bg}
+    >
       {children}
     </ImageBackground>
   );

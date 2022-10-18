@@ -1,5 +1,7 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Button, Icon, Input, Text } from "@rneui/themed";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Tasks } from "../../types/task";
 import { generateRnadomId } from "../../utils/generateRandomId";
@@ -8,22 +10,23 @@ import TaskBox from "../TaskBox";
 const TasksBox = () => {
   const [inputAdd, setInputAdd] = useState("");
 
-  const [tasks, setTasks] = useState<Tasks>([
-    {
-      id: generateRnadomId(),
-      name: "Teste 1",
-      checked: true,
-    },
-    {
-      id: generateRnadomId(),
-      name: "Teste 2",
-      checked: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState<Tasks>([]);
+
+  const getTasks = () => {
+    AsyncStorage.getItem("tasks").then((res) => {
+      const jsonRes = JSON.parse(res || '{bg: ""}');
+      setTasks(jsonRes);
+    });
+  };
+
+  useEffect(() => {
+    getTasks();
+  }, []);
 
   const onDeleteTask = (id: string) => {
     const updatedTasks = tasks.filter((task) => task.id !== id);
 
+    AsyncStorage.setItem("tasks", JSON.stringify(updatedTasks || []));
     setTasks(updatedTasks || []);
   };
 
@@ -39,6 +42,7 @@ const TasksBox = () => {
       ];
 
       setTasks(newTasks);
+      AsyncStorage.setItem("tasks", JSON.stringify(newTasks));
       setInputAdd("");
     }
   };
