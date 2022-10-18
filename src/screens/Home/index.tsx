@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import "expo-dev-menu";
 import TaskBox from "../../components/TaskBox";
@@ -10,10 +10,27 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ImageBackgroundCustom from "../../components/ImageBackgroundCustom";
 import PomoBox from "../../components/PomoBox";
 import TasksBox from "../../components/TasksBox";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home", "MyStack">;
 
 const Home = ({ navigation }: Props) => {
+  const [charImg, setCharImg] = useState();
+  const getCustomize = () => {
+    AsyncStorage.getItem("customize").then((res) => {
+      const jsonRes = JSON.parse(res || '{bg: ""}');
+      setCharImg(jsonRes.char);
+    });
+  };
+
+  useEffect(() => {
+    const unsubscribe: () => void = navigation.addListener("focus", () => {
+      getCustomize();
+
+      return unsubscribe;
+    });
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <ImageBackgroundCustom navigation={navigation}>
@@ -28,7 +45,7 @@ const Home = ({ navigation }: Props) => {
             </View>
             <Image
               style={styles.char}
-              source={require("../../../assets/hood.gif")}
+              source={charImg || require("../../../assets/char/char1.gif")}
             />
           </View>
 
@@ -55,6 +72,7 @@ const styles = StyleSheet.create({
     height: 150,
     width: 150,
     margin: 25,
+    resizeMode: "contain",
   },
   topBox: {
     width: "100%",

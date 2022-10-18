@@ -35,22 +35,14 @@ const Customize = ({ navigation }: CustomizeType) => {
           titleStyle={{ fontSize: 12 }}
           icon={{ name: "heart", type: "ionicon", color: "white" }}
         />
-        <Tab.Item
-          title="Sound"
-          titleStyle={{ fontSize: 12 }}
-          icon={{ name: "cart", type: "ionicon", color: "white" }}
-        />
       </Tab>
 
       <TabView value={index || 0} onChange={setIndex} animationType="spring">
         <TabView.Item style={{ width: "100%" }}>
           <BackgroundTab navigation={navigation} />
         </TabView.Item>
-        <TabView.Item style={{ backgroundColor: "blue", width: "100%" }}>
-          <CharTab />
-        </TabView.Item>
-        <TabView.Item style={{ backgroundColor: "green", width: "100%" }}>
-          <Text h1>Sound</Text>
+        <TabView.Item style={{ width: "100%" }}>
+          <CharTab navigation={navigation} />
         </TabView.Item>
       </TabView>
     </>

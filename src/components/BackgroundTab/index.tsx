@@ -15,11 +15,13 @@ type BackgroundTabType = {
 
 const BackgroundTab = ({ navigation }: BackgroundTabType) => {
   const [bg, setBg] = useState<any>();
+  const [customize, setCustomize] = useState<any>();
 
   const getCustomize = () => {
     AsyncStorage.getItem("customize").then((res) => {
       const jsonRes = JSON.parse(res || '{bg: ""}');
       setBg(jsonRes.bg);
+      setCustomize(jsonRes);
     });
   };
 
@@ -33,10 +35,11 @@ const BackgroundTab = ({ navigation }: BackgroundTabType) => {
 
   const setImage = (img: any) => {
     setBg(img);
-    const customize = {
+    const newCustomize = {
+      ...customize,
       bg: img,
     };
-    AsyncStorage.setItem("customize", JSON.stringify(customize));
+    AsyncStorage.setItem("customize", JSON.stringify(newCustomize));
   };
 
   return (
