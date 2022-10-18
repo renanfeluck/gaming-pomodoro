@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -36,7 +37,10 @@ const Home = ({ navigation }: Props) => {
   }, [navigation]);
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
       <ImageBackgroundCustom navigation={navigation}>
         <ScrollView style={{ width: "100%", flex: 1 }}>
           <View style={styles.topBox}>
